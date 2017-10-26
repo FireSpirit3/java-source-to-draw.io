@@ -11,4 +11,7 @@ class Foo {
 
     void aMethod() {
     }
+
+    void bMethod(String b) {
+    }
 }
