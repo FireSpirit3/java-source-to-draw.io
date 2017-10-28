@@ -1,5 +1,11 @@
 package local.hochguertel.javasourcetodrawio;
 
+import com.mxgraph.util.mxUtils;
+import com.mxgraph.view.mxGraph;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Node;
+
 /**
  * DiagramConverter
  * <p>
@@ -7,4 +13,10 @@ package local.hochguertel.javasourcetodrawio;
  */
 public class DiagramConverter {
 
+    private final static Logger logger = LoggerFactory.getLogger(DiagramConverter.class);
+
+    public static String getDiagram(mxGraph graph) {
+        Node node = NodeConverter.getXmlNode(graph);
+        return mxUtils.getPrettyXml(node);
+    }
 }

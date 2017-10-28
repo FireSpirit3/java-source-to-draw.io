@@ -40,7 +40,7 @@ class CuPrinter {
 
         final MethodNameCollector methodNameCollector = new MethodNameCollector();
         logCollector(getCollector(methodNameCollector));
-
+        
     }
 
     private static void logCollector(List<String> collector) {
