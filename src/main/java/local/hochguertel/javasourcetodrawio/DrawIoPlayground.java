@@ -14,7 +14,62 @@ public class DrawIoPlayground {
 
     private final static Logger logger = LoggerFactory.getLogger(DrawIoPlayground.class);
 
+    private static mxGraph getUmlClassShape() {
+        mxGraph diagram = new mxGraph();
+        Object parent = diagram.getDefaultParent(); // mxCell
+
+        // HEADER:
+        // <mxCell id="2" value="Foo" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;strokeColor=#FFE599;fillColor=none;gradientColor=#ffffff;" vertex="1" parent="1">
+        // <mxGeometry x="10" y="10" width="160" height="86" as="geometry"/>
+        // </mxCell>
+
+        // FIELD(S):
+        // <mxCell id="3" value="- a: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="2">
+        // <mxGeometry y="26" width="160" height="26" as="geometry"/>
+        // </mxCell>
+
+        // FIELD-METHOD-SEPERATOR:
+        // <mxCell id="4" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="2">
+        // <mxGeometry y="52" width="160" height="8" as="geometry"/>
+        // </mxCell>
+
+        // METHOD(S):
+        // <mxCell id="5" value=" aMethod(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="2">
+        // <mxGeometry y="60" width="160" height="26" as="geometry"/>
+        // </mxCell>
+
+        final String className = "Foo";
+        final String field = "- a: String";
+        final String method = " aMethod(): void";
+        final String headerStyle =
+                "swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;strokeColor=#FFE599;fillColor=none;gradientColor=#ffffff;";
+        final Object header = diagram.insertVertex(parent, null, className, 10, 10, 160, 86, headerStyle);
+
+        final String fieldStyle =
+                "text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;";
+        final Object fields = diagram.insertVertex(header, null, field, 0, 26, 160, 26, fieldStyle);
+
+        final String seperatorStyle =
+                "line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;";
+        final Object seperator = diagram.insertVertex(header, null, "", 0, 52, 160, 8,
+                seperatorStyle);
+
+        final String methodStyle =
+                "\"text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;\"";
+        final Object methods = diagram.insertVertex(header, null, method, 0, 60, 160, 26,
+                methodStyle);
+
+        logger.info("How does the diagram look as xml? \n{}", getDiagram(diagram));
+
+        return diagram;
+    }
+
     public static void main(String[] args) {
+        //        getExampleDiagram();
+        getUmlClassShape();
+    }
+
+    private static void getExampleDiagram() {
         // Creates graph with model
         mxGraph diagram = new mxGraph();
         Object parent = diagram.getDefaultParent(); // mxCell
