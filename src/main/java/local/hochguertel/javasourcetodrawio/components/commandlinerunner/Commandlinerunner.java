@@ -52,10 +52,12 @@ public class Commandlinerunner {
         CommandLine cli = parser.parse(options, args);
 
         if (cli.hasOption(CLI_SOURCE_PATH)) {
+            logger.info("Option '{}' is given via commandline call.", CLI_SOURCE_PATH);
             sourcePath = new SourcePath(cli.getOptionValue(CLI_SOURCE_PATH));
         }
 
         if (cli.hasOption(CLI_OUTPUT_FILENAME)) {
+            logger.info("Option '{}' is given via commandline call.", CLI_OUTPUT_FILENAME);
             outputFile = new OutputFile(cli.getOptionValue(CLI_OUTPUT_FILENAME));
         }
     }
