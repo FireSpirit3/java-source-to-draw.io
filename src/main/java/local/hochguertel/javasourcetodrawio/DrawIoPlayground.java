@@ -1,5 +1,6 @@
 package local.hochguertel.javasourcetodrawio;
 
+import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,14 +88,14 @@ public class DrawIoPlayground {
     private static void getUmlClassWithAssociation() {
         mxGraph diagram = new mxGraph();
         final Object parent = diagram.getDefaultParent();
-        final Object classA = getUmlClassShape(diagram, "FooA", 10, 10);
-        final Object classB = getUmlClassShape(diagram, "FooB", 250, 10);
-        diagram.insertEdge(parent, null, "e1", classA, classB);
+        final mxCell fooA = getUmlClassShape(diagram, "FooA", 10, 10);
+        final mxCell fooB = getUmlClassShape(diagram, "FooB", 250, 10);
+        diagram.insertEdge(parent, null, "e1", fooA, fooB);
 
         logger.info("How does the diagram look as xml? \n{}", getDiagram(diagram));
     }
 
-    private static Object getUmlClassShape(mxGraph diagram, String className, int x, int y) {
+    private static mxCell getUmlClassShape(mxGraph diagram, String className, int x, int y) {
         Object parent = diagram.getDefaultParent(); // mxCell
 
         final String field = "- a: String";
@@ -128,7 +129,10 @@ public class DrawIoPlayground {
         final Object methods = diagram.insertVertex(header, null, method, 0, methodStartY, width, fieldAndMethodRowHeight,
                 methodStyle);
 
-        return header;
+        if (!(header instanceof mxCell)) {
+            throw new IllegalStateException("Expected that header is an mxCell class!");
+        }
+        return (mxCell) header;
     }
 
 }
