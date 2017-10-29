@@ -14,7 +14,7 @@ public class DrawIoPlayground {
 
     private final static Logger logger = LoggerFactory.getLogger(DrawIoPlayground.class);
 
-    private static mxGraph getUmlClassShape() {
+    private static mxGraph getUmlClassDiagram() {
         mxGraph diagram = new mxGraph();
         Object parent = diagram.getDefaultParent(); // mxCell
 
@@ -66,7 +66,8 @@ public class DrawIoPlayground {
 
     public static void main(String[] args) {
         //        getExampleDiagram();
-        getUmlClassShape();
+        //        getUmlClassDiagram();
+        getUmlClassWithAssociation();
     }
 
     private static void getExampleDiagram() {
@@ -81,6 +82,53 @@ public class DrawIoPlayground {
         e1 = diagram.insertEdge(parent, null, "e1", v1, v2);
 
         logger.info("How does the diagram look as xml? \n{}", getDiagram(diagram));
+    }
+
+    private static void getUmlClassWithAssociation() {
+        mxGraph diagram = new mxGraph();
+        final Object parent = diagram.getDefaultParent();
+        final Object classA = getUmlClassShape(diagram, "FooA", 10, 10);
+        final Object classB = getUmlClassShape(diagram, "FooB", 250, 10);
+        diagram.insertEdge(parent, null, "e1", classA, classB);
+
+        logger.info("How does the diagram look as xml? \n{}", getDiagram(diagram));
+    }
+
+    private static Object getUmlClassShape(mxGraph diagram, String className, int x, int y) {
+        Object parent = diagram.getDefaultParent(); // mxCell
+
+        final String field = "- a: String";
+        final String method = " aMethod(): void";
+        final String headerStyle =
+                "swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;strokeColor=#FFE599;fillColor=none;gradientColor=#ffffff;";
+
+        final int fieldAndMethodRowHeight = 26;
+
+        final int width = 160;
+        final int height = 86;
+
+        final Object header = diagram.insertVertex(parent, null, className, x, y, width, height, headerStyle);
+
+        final String fieldStyle =
+                "text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;";
+        final int fieldStartY = 26;
+        final Object fields = diagram.insertVertex(header, null, field, 0, fieldStartY, width, fieldAndMethodRowHeight, fieldStyle);
+
+        final String seperatorStyle =
+                "line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;";
+        final int seperatorStartY = 52;
+        final int seperatorHeight = 8;
+        final Object seperator = diagram.insertVertex(header, null, "", 0, seperatorStartY, width, seperatorHeight,
+                seperatorStyle);
+
+        final String methodStyle =
+                "\"text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;\"";
+        final int methodStartY = 60;
+
+        final Object methods = diagram.insertVertex(header, null, method, 0, methodStartY, width, fieldAndMethodRowHeight,
+                methodStyle);
+
+        return header;
     }
 
 }
