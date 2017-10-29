@@ -1,4 +1,4 @@
-package local.hochguertel.javasourcetodrawio;
+package local.hochguertel.javasourcetodrawio.util;
 
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.util.mxUtils;
@@ -12,7 +12,7 @@ import org.w3c.dom.Node;
  * <p>
  * Created on 29.10.17
  */
-public class DiagramConverter {
+public final class DiagramConverter {
 
     private final static Logger logger = LoggerFactory.getLogger(DiagramConverter.class);
 

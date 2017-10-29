@@ -1,4 +1,4 @@
-package local.hochguertel.javasourcetodrawio;
+package local.hochguertel.javasourcetodrawio.playground;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;

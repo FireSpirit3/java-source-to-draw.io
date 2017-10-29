@@ -1,4 +1,4 @@
-package local.hochguertel.javasourcetodrawio;
+package local.hochguertel.javasourcetodrawio.playground;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;

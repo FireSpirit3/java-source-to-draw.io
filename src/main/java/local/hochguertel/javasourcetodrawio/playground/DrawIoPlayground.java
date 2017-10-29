@@ -1,10 +1,10 @@
-package local.hochguertel.javasourcetodrawio;
+package local.hochguertel.javasourcetodrawio.playground;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static local.hochguertel.javasourcetodrawio.DiagramConverter.getDiagram;
+import static local.hochguertel.javasourcetodrawio.util.DiagramConverter.getDiagram;
 
 /**
  * DrawIoPlayground

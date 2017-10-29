@@ -1,6 +1,8 @@
-package local.hochguertel.javasourcetodrawio;
+package local.hochguertel.javasourcetodrawio.domain;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.slf4j.Logger;
@@ -27,5 +29,18 @@ public class SourcePath {
         if (!file.exists()) {
             throw new IllegalArgumentException("Path to Source does not exists!");
         }
+        logger.info("Validation successfully");
+    }
+
+    public Path get() {
+        return path;
+    }
+
+    public boolean isFile() {
+        return path.toFile().isFile();
+    }
+
+    public FileInputStream getFileInputStream() throws FileNotFoundException {
+        return new FileInputStream(path.toFile());
     }
 }

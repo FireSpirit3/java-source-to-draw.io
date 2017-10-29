@@ -1,4 +1,4 @@
-package local.hochguertel.javasourcetodrawio;
+package local.hochguertel.javasourcetodrawio.domain;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -27,5 +27,6 @@ public class OutputFile {
         if (file.exists()) {
             throw new IllegalArgumentException("The Output file already exists. Please change the filename or delete the file!");
         }
+        logger.info("Validation successfully");
     }
 }

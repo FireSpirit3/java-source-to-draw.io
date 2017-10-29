@@ -1,10 +1,10 @@
-package local.hochguertel.javasourcetodrawio;
+package local.hochguertel.javasourcetodrawio.util;
 
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxIGraphModel;
 import org.w3c.dom.Node;
 
-public class NodeConverter {
+public final class NodeConverter {
 
     private final static mxCodec codec;
 
