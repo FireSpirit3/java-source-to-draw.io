@@ -2,7 +2,6 @@ package local.hochguertel.javasourcetodrawio;
 
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.view.mxGraph;
 import org.w3c.dom.Node;
 
 public class NodeConverter {
@@ -13,8 +12,7 @@ public class NodeConverter {
         codec = new mxCodec();
     }
 
-    public static Node getXmlNode(mxGraph graph) {
-        final mxIGraphModel model = graph.getModel();
+    public static Node getXmlNode(mxIGraphModel model) {
         return codec.encode(model);
     }
 
