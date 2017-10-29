@@ -8,7 +8,7 @@ import java.util.Objects;
  * <p>
  * Created on 29.10.17
  */
-public class ClassRepresentation {
+public class ClassRepresentation implements HasUmlAccessSpecifer, JavaSourceRepresentation {
 
     private final String accessSpecifier;
     private final String name;

@@ -11,6 +11,8 @@ import local.hochguertel.javasourcetodrawio.components.drawiodiagram.Drawiodiagr
 import local.hochguertel.javasourcetodrawio.components.javasource.ClassOrInterfaceRepresentationCollector;
 import local.hochguertel.javasourcetodrawio.components.javasource.JavaSourceService;
 import local.hochguertel.javasourcetodrawio.components.javasource.JavaSourceServiceImpl;
+import local.hochguertel.javasourcetodrawio.domain.drawio.MxGraphProxy;
+import local.hochguertel.javasourcetodrawio.domain.drawio.UmlClassShape;
 
 /**
  * ToUML
@@ -32,8 +34,8 @@ public class ToUML {
 
         JavaSourceService javaSourceService = new JavaSourceServiceImpl(clir.getSourcePath(), classCollector);
 
-        Drawiodiagram drawiodiagram = new DrawiodiagramImpl(javaSourceService);
-        drawiodiagram.getDiagram();
+        Drawiodiagram drawiodiagram = new DrawiodiagramImpl(javaSourceService, new MxGraphProxy());
+        UmlClassShape classDiagram = drawiodiagram.getDiagram();
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.Objects;
  * <p>
  * Created on 29.10.17
  */
-public class InterfaceRepresentation {
+public class InterfaceRepresentation implements HasUmlAccessSpecifer {
 
     private final String visibility = "public";
     private final String name; // Foo
@@ -17,7 +17,7 @@ public class InterfaceRepresentation {
     }
 
     public String getVisibility() {
-        return visibility;
+        return getAccessSpecifier();
     }
 
     public String getName() {
@@ -38,5 +38,10 @@ public class InterfaceRepresentation {
     @Override
     public int hashCode() {
         return Objects.hash(visibility, name);
+    }
+
+    @Override
+    public String getAccessSpecifier() {
+        return visibility;
     }
 }

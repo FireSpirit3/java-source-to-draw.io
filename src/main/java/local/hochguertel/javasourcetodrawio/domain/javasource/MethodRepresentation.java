@@ -9,7 +9,7 @@ import java.util.Set;
  * <p>
  * Created on 29.10.17
  */
-public class MethodRepresentation {
+public class MethodRepresentation implements HasUmlAccessSpecifer {
 
     private final String accessSpecifier;
     private final String returnReferenceType;

@@ -4,7 +4,7 @@ import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxIGraphModel;
 import org.w3c.dom.Node;
 
-public final class NodeConverter {
+public final class NodeOutpututil {
 
     private final static mxCodec codec;
 

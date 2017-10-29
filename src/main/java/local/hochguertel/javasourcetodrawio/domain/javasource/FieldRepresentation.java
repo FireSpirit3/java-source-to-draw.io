@@ -7,7 +7,7 @@ import java.util.Objects;
  * <p>
  * Created on 29.10.17
  */
-public class FieldRepresentation {
+public class FieldRepresentation implements HasUmlAccessSpecifer {
 
     private final String accessSpecifier;
     private final String referenceType;
@@ -47,4 +47,5 @@ public class FieldRepresentation {
     public String getAccessSpecifier() {
         return accessSpecifier;
     }
+
 }

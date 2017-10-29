@@ -1,5 +1,7 @@
 package local.hochguertel.javasourcetodrawio.components.drawiodiagram;
 
+import local.hochguertel.javasourcetodrawio.domain.drawio.UmlClassShape;
+
 /**
  * Drawiodiagram
  * <p>
@@ -7,6 +9,6 @@ package local.hochguertel.javasourcetodrawio.components.drawiodiagram;
  */
 public interface Drawiodiagram {
 
-    void getDiagram();
+    UmlClassShape getDiagram();
 
 }
