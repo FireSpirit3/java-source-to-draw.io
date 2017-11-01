@@ -31,39 +31,40 @@ public class UmlClassShape implements Drawioshape {
     public static final int DEFAULT_HEIGHT = 86;
     public static final int DEFAULT_X = 10;
     public static final int DEFAULT_Y = 10;
-    public static final String DEFAULT_ID = null;
 
     private final static Logger logger = LoggerFactory.getLogger(UmlClassShape.class);
-    private final MxGraphProxy graph;
-    private final Set<mxCell> fields;
-    private final Set<mxCell> methods;
-    private mxCell title;
+    private final MxGraphProxy diagram;
+    private final Set<mxCell> fields = new HashSet<>();
+    private final Set<mxCell> methods = new HashSet<>();
+    private mxCell classname;
     private mxCell seperator;
 
-    public UmlClassShape(MxGraphProxy graph) {
-        this.graph = graph;
-        fields = new HashSet<>();
-        methods = new HashSet<>();
+    public UmlClassShape(MxGraphProxy diagram) {
+        this.diagram = diagram;
+    }
+
+    public mxCell getShape() {
+        return classname;
     }
 
     public void setClassname(String className) {
-        title = createVertex(className, CLASSNAME_STYLE);
+        classname = createVertex(className, CLASSNAME_STYLE);
     }
 
     private mxCell createVertex(String text, String style) {
-        return graph.insertVertex(graph.getDefaultParent(), DEFAULT_ID, text, DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, style);
+        return diagram.insertVertex(diagram.getDefaultParent(), null, text, DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, style);
     }
 
     private mxCell createFieldVertex(String umlfield) {
-        return graph.insertVertex(title, DEFAULT_ID, umlfield, 0, getFieldYCordinate(), DEFAULT_WIDTH, FIELD_HEIGHT, FIELD_STYLE);
+        return diagram.insertVertex(classname, null, umlfield, 0, getFieldYCordinate(), DEFAULT_WIDTH, FIELD_HEIGHT, FIELD_STYLE);
     }
 
     private mxCell createSeperatorVertex() {
-        return graph.insertVertex(title, DEFAULT_ID, "", 0, getSeperatorYCordinate(), DEFAULT_WIDTH, SEPERATOR_HEIGHT, SEPERATOR_STYLE);
+        return diagram.insertVertex(classname, null, "", 0, getSeperatorYCordinate(), DEFAULT_WIDTH, SEPERATOR_HEIGHT, SEPERATOR_STYLE);
     }
 
     private mxCell createMethodVertex(String umlmethod) {
-        return graph.insertVertex(title, DEFAULT_ID, umlmethod, 0, getMethodYCordinate(), DEFAULT_WIDTH, METHOD_HEIGHT, METHOD_STYLE);
+        return diagram.insertVertex(classname, null, umlmethod, 0, getMethodYCordinate(), DEFAULT_WIDTH, METHOD_HEIGHT, METHOD_STYLE);
     }
 
     private int getFieldYCordinate() {
@@ -96,14 +97,14 @@ public class UmlClassShape implements Drawioshape {
     }
 
     public void addField(String umlfield) {
-        if (title == null) {
+        if (classname == null) {
             throw new IllegalStateException("Classname not yet set. First set the classname and then add Fields.");
         }
         fields.add(createFieldVertex(umlfield));
     }
 
     public void addMethod(String umlmethod) {
-        if (title == null) {
+        if (classname == null) {
             throw new IllegalStateException("Classname not yet set. First set the classname and then add Methods.");
         }
         if (methods.size() == 0) {
@@ -114,7 +115,8 @@ public class UmlClassShape implements Drawioshape {
 
     public void traceYAxes() {
         fields.forEach(mxCell -> logger.info("Y: {}, F: '{}'", mxCell.getGeometry().getY(), mxCell.getValue()));
-        logger.info("Y: {}, S", seperator.getGeometry().getY());
+        if (seperator != null)
+            logger.info("Y: {}, S", seperator.getGeometry().getY());
         methods.forEach(mxCell -> logger.info("Y: {}, M: '{}'", mxCell.getGeometry().getY(), mxCell.getValue()));
     }
 }

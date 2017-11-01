@@ -1,6 +1,10 @@
 package local.hochguertel.javasourcetodrawio.components.drawiodiagram;
 
+import java.util.ArrayList;
 import java.util.List;
+import com.mxgraph.layout.mxCircleLayout;
+import com.mxgraph.layout.mxIGraphLayout;
+import com.mxgraph.view.mxGraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import local.hochguertel.javasourcetodrawio.components.javasource.JavaSourceService;
@@ -22,17 +26,16 @@ public class DrawiodiagramImpl implements Drawiodiagram {
 
     private final static Logger logger = LoggerFactory.getLogger(DrawiodiagramImpl.class);
     private final JavaSourceService javaSourceService;
-    private final MxGraphProxy graph;
+    private final MxGraphProxy diagram;
     private final UmlAccessSpecifierConverter umlAccessSpecifierConverter = new UmlAccessSpecifierConverter();
 
-    public DrawiodiagramImpl(JavaSourceService javaSourceService, MxGraphProxy graph) {
+    public DrawiodiagramImpl(JavaSourceService javaSourceService, MxGraphProxy diagram) {
         this.javaSourceService = javaSourceService;
-        this.graph = graph;
+        this.diagram = diagram;
     }
 
     @Override
-    public UmlClassShape getDiagram() {
-        UmlClassShape umlClassShape = new UmlClassShape(graph);
+    public List<UmlClassShape> getDiagram() {
 
         Drawioumlmapper<ClassRepresentation, UmlClassShape> classDrawioumlmapper = new Drawioumlmapper<ClassRepresentation, UmlClassShape>() {
 
@@ -47,13 +50,32 @@ public class DrawiodiagramImpl implements Drawiodiagram {
             }
         };
 
+        List<UmlClassShape> umlClassShapes = new ArrayList<>();
         List<ClassRepresentation> classRepresentations = javaSourceService.getClassRepresentations();
-        ClassRepresentation classRepresentation = classRepresentations.get(0);
-        classDrawioumlmapper.map(classRepresentation, umlClassShape);
+        classRepresentations.forEach(classRepresentation -> {
+            final UmlClassShape umlClassShape = new UmlClassShape(diagram);
+            umlClassShapes.add(umlClassShape);
+            classDrawioumlmapper.map(classRepresentation, umlClassShape);
+            umlClassShape.traceYAxes();
+        });
 
-        umlClassShape.traceYAxes();
-        logger.info("How does the graph look as xml? \n{}", DrawIoDiagramOutputUtil.getDiagram(graph));
+        arrangeShapes();
 
-        return umlClassShape;
+        // @TODO: NEXT
+        // ... Next should be creating edges from one class to another class...
+        // Javaparser should have this information for us?
+        // Ah! That's the purpose of javaparser symbol resolver... see javaparservisited.pdf p.56 ff.
+
+        logger.info("How does the diagram look as xml? \n{}", DrawIoDiagramOutputUtil.getDiagram(diagram));
+
+        return umlClassShapes;
+    }
+
+    private void arrangeShapes() {
+        final mxGraph graph = diagram.getGraph();
+        graph.getModel().beginUpdate();
+        mxIGraphLayout layout = new mxCircleLayout(graph);
+        layout.execute(graph.getDefaultParent());
+        graph.getModel().endUpdate();
     }
 }

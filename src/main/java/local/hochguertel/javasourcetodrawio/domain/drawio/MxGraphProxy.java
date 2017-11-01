@@ -28,4 +28,8 @@ public class MxGraphProxy {
     public mxCell insertVertex(mxCell parent, String id, String value, int x, int y, int width, int height, String style) {
         return (mxCell) graph.insertVertex(parent, id, value, x, y, width, height, style);
     }
+
+    public mxGraph getGraph() {
+        return graph;
+    }
 }

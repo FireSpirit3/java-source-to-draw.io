@@ -1,7 +1,8 @@
 package local.hochguertel.javasourcetodrawio;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ public class ToUML {
     private final static Logger logger = LoggerFactory.getLogger(ToUML.class);
     private static Commandlinerunner clir = new Commandlinerunner();
 
-    public static void main(String[] args) throws ParseException, FileNotFoundException {
+    public static void main(String[] args) throws ParseException, IOException, com.github.javaparser.ParseException {
         logger.info("Given commandline-parameter: \n{}", Arrays.toString(args));
         ClassOrInterfaceRepresentationCollector classCollector = new ClassOrInterfaceRepresentationCollector();
         final boolean cliSuccess = clir.call(args);
@@ -37,7 +38,7 @@ public class ToUML {
         JavaSourceService javaSourceService = new JavaSourceServiceImpl(clir.getSourcePath(), classCollector);
 
         Drawiodiagram drawiodiagram = new DrawiodiagramImpl(javaSourceService, new MxGraphProxy());
-        UmlClassShape classDiagram = drawiodiagram.getDiagram();
+        List<UmlClassShape> classDiagram = drawiodiagram.getDiagram();
     }
 
 }
