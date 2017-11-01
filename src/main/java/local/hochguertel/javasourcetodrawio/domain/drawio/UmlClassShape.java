@@ -23,7 +23,7 @@ public class UmlClassShape implements Drawioshape {
             "line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;";
     public static final String METHOD_STYLE =
             "\"text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;\"";
-
+    public static final int CLASSNAME_HEIGHT = 26;
     public static final int METHOD_HEIGHT = 26;
     public static final int FIELD_HEIGHT = 26;
     public static final int SEPERATOR_HEIGHT = 8;
@@ -67,13 +67,25 @@ public class UmlClassShape implements Drawioshape {
     }
 
     private int getFieldYCordinate() {
-        if (fields.size() == 0)
-            return FIELD_HEIGHT;
-        return FIELD_HEIGHT + fields.size() * FIELD_HEIGHT;
+        if (isFirstField())
+            return CLASSNAME_HEIGHT;
+        return CLASSNAME_HEIGHT + getCurrentHeightOfFieldArea();
+    }
+
+    private int getAmountOfFields() {
+        return fields.size();
+    }
+
+    private boolean isFirstField() {
+        return getAmountOfFields() == 0;
     }
 
     private int getSeperatorYCordinate() {
-        return (fields.size() * FIELD_HEIGHT) + FIELD_HEIGHT;
+        return getCurrentHeightOfFieldArea() + FIELD_HEIGHT;
+    }
+
+    private int getCurrentHeightOfFieldArea() {
+        return getAmountOfFields() * FIELD_HEIGHT;
     }
 
     private int getMethodYCordinate() {
