@@ -27,11 +27,13 @@ public class ToUML {
     public static void main(String[] args) throws ParseException, FileNotFoundException {
         logger.info("Given commandline-parameter: \n{}", Arrays.toString(args));
         ClassOrInterfaceRepresentationCollector classCollector = new ClassOrInterfaceRepresentationCollector();
-        clir.call(new String[] {
-                "--path-to-source=/Users/hochguertelto/03 Home/03 Privat/03 Projekte/03 Java/java-source-to-draw.io/Foo.java",
-                "--write-output-to-file=Foo.xml"
-        });
+        final boolean cliSuccess = clir.call(args);
 
+        if (!cliSuccess) {
+            System.out.println("\n");
+            clir.printHelp();
+            return;
+        }
         JavaSourceService javaSourceService = new JavaSourceServiceImpl(clir.getSourcePath(), classCollector);
 
         Drawiodiagram drawiodiagram = new DrawiodiagramImpl(javaSourceService, new MxGraphProxy());

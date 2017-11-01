@@ -69,11 +69,11 @@ public class UmlClassShape implements Drawioshape {
     private int getFieldYCordinate() {
         if (fields.size() == 0)
             return FIELD_HEIGHT;
-        return fields.size() * FIELD_HEIGHT;
+        return FIELD_HEIGHT + fields.size() * FIELD_HEIGHT;
     }
 
     private int getSeperatorYCordinate() {
-        return getFieldYCordinate() + FIELD_HEIGHT;
+        return (fields.size() * FIELD_HEIGHT) + FIELD_HEIGHT;
     }
 
     private int getMethodYCordinate() {

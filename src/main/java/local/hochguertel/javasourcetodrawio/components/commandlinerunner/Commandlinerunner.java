@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -48,8 +49,21 @@ public class Commandlinerunner {
         opts.forEach(this.options::addOption);
     }
 
-    public void call(String[] args) throws ParseException {
-        CommandLine cli = parser.parse(options, args);
+    public void printHelp() {
+        // automatically generate the help statement
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("target/java-source-to-draw-io-0.0.1-SNAPSHOT.jar", options);
+    }
+
+    public boolean call(String[] args) {
+        CommandLine cli = null;
+        try {
+            cli = parser.parse(options, args);
+        } catch (ParseException e) {
+            //            e.printStackTrace();
+            System.err.println("Parsing failed.  Reason: " + e.getMessage());
+            return false;
+        }
 
         if (cli.hasOption(CLI_SOURCE_PATH)) {
             logger.info("Option '{}' is given via commandline call.", CLI_SOURCE_PATH);
@@ -60,6 +74,7 @@ public class Commandlinerunner {
             logger.info("Option '{}' is given via commandline call.", CLI_OUTPUT_FILENAME);
             outputFile = new OutputFile(cli.getOptionValue(CLI_OUTPUT_FILENAME));
         }
+        return true;
     }
 
     public SourcePath getSourcePath() {
